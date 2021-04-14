@@ -2,7 +2,7 @@ import React from 'react';
 
 const FlightSelector = (props) => {
   const options = props.flights.map(flight => {
-    return <option value={flight.reservationCode} key={flight.reservationCode}>{flight.name}</option>
+    return <option value={flight.reservationCode} key={flight.reservationCode}>{flight.carrier}</option>
   })
 
   function handleChange(event) {

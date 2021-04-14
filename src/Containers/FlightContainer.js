@@ -1,6 +1,11 @@
 import React from 'react';
+import {parseString} from 'xml2js'
+
+import xmlFlightData from '../public/flightdata_A.xml'
 import FlightSelector from '../Components/FlightSelector';
 import FlightDetail from '../Components/FlightDetail';
+
+const result = null; 
 
 class FlightContainer extends React.Component {
   constructor(props) {
@@ -12,14 +17,30 @@ class FlightContainer extends React.Component {
     this.handleFlightSelected = this.handleFlightSelected.bind(this);
   }
 
-  componentDidMount() {
-    const url = '../public/flightdata_A.xml';
-
+  componentDidMount(){
+    this._isMounted = true;
+    var url = xmlFlightData;
+   
     fetch(url)
-      .then(res => res.json())
-      .then(flights => this.setState({ flights: flights }))
-      .catch(err => console.error);
-  }
+      .then((res) => res.text())
+      .then((resText) => {
+
+ // parse response into JSON 
+        parseString(resText, function (err, result) {
+       console.log(result);
+       return result;
+      });
+     this.setState({datasource : result})
+     })
+
+  .catch((error) => {
+    console.log('Error fetching the data: ', error);
+  });
+}
+
+componentWillUnmount() {
+  this._isMounted = false;
+}
 
   handleFlightSelected(reservationCode) {
     this.setState({ selectedFlightReservationCode: reservationCode })
