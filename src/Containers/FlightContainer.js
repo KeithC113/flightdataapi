@@ -13,7 +13,7 @@ class FlightContainer extends React.Component {
   }
 
   componentDidMount() {
-    const url = '';
+    const url = '../public/flightdata_A.xml';
 
     fetch(url)
       .then(res => res.json())
