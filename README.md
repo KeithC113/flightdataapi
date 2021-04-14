@@ -1,3 +1,7 @@
+# Flight data API | Keith Campbell | 14 April 2021
+
+## API written to extract data from xml file, create SQL table then query it. 
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
