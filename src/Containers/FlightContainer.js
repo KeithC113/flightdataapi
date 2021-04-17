@@ -12,48 +12,48 @@ class FlightContainer extends React.Component {
     super(props);
     this.state = {
       flights: [],
-      selectedFlightReservationCode: ''
+      selectedFlightReservation: ''
     };
-    this.handleFlightSelected = this.handleFlightSelected.bind(this);
+//    this.handleFlightSelected = this.handleFlightSelected.bind(this);
   }
 
   componentDidMount(){
     this._isMounted = true;
     var url = xmlFlightData;
-   
+
     fetch(url)
       .then((res) => res.text())
       .then((resText) => {
 
  // parse response into JSON 
-        parseString(resText, function (err, result) {
-       console.log(result);
-       return result;
+        parseString(resText, function (err, result){
+        console.log(result);
+        return result;
       });
-     this.setState({datasource : result})
+        this.setState({flights : result})
      })
 
   .catch((error) => {
     console.log('Error fetching the data: ', error);
   });
-}
+ };
 
 componentWillUnmount() {
   this._isMounted = false;
 }
 
-  handleFlightSelected(reservationCode) {
-    this.setState({ selectedFlightReservationCode: reservationCode })
-  }
+ // handleFlightSelected(reservation) {
+ //   this.setState({ selectedFlightReservation: reservation })
+ // }
 
   render() {
-    const selectedFlight = this.state.flights.find(flight => flight.reservationCode === this.state.selectedFlightReservationCode)
+ //   const selectedFlight = this.state.flights.find(flight => flight.reservation === this.state.selectedFlightReservation)
     
     return (
       <div>
         <h2>Flight Container</h2>
-        <FlightSelector flights={this.state.flights} onFlightSelected={this.handleFlightSelected} />
-        <FlightDetail flight={selectedFlight} />
+   
+
       </div>
     );
   }
