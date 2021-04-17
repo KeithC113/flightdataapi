@@ -5,7 +5,7 @@ import xmlFlightData from '../public/flightdata_A.xml'
 import FlightSelector from '../Components/FlightSelector';
 import FlightDetail from '../Components/FlightDetail';
 
-const result = null; 
+const flightData = null; 
 
 class FlightContainer extends React.Component {
   constructor(props) {
@@ -20,43 +20,46 @@ class FlightContainer extends React.Component {
   componentDidMount(){
     this._isMounted = true;
     var url = xmlFlightData;
+    var newState
 
     fetch(url)
       .then((res) => res.text())
       .then((resText) => {
 
  // parse response into JSON 
-        parseString(resText, function (err, result){
-        console.log(result);
-        return result;
+        parseString(resText, function (err, flightData){
+        console.log(flightData);
+        newState = flightData 
       });
-        this.setState({flights : result})
+        this.setState({flights: newState})
      })
 
-  .catch((error) => {
-    console.log('Error fetching the data: ', error);
+.catch((error) => {
+  console.log('Error fetching the feed: ', error);
   });
- };
+}
 
 componentWillUnmount() {
   this._isMounted = false;
 }
 
- // handleFlightSelected(reservation) {
- //   this.setState({ selectedFlightReservation: reservation })
- // }
+ handleFlightSelected(reservation) {
+   this.setState({ selectedFlightReservation: reservation })
+ }
 
   render() {
- //   const selectedFlight = this.state.flights.find(flight => flight.reservation === this.state.selectedFlightReservation)
+    const selectedFlight = this.state.flights.find(flight => flight.reservation === this.state.selectedFlightReservation)
     
     return (
       <div>
         <h2>Flight Container</h2>
-   
+        <FlightSelector flights={this.state.flights} onFlightSelected={this.handleFlightSelected} />
+        <FlightDetail flight={selectedFlight} />   
 
       </div>
     );
+   }
   }
-}
 
 export default FlightContainer;
+
