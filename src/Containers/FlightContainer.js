@@ -2,8 +2,8 @@ import React from 'react';
 import {parseString} from 'xml2js'
 
 import xmlFlightData from '../public/flightdata_A.xml'
-import FlightSelector from '../Components/FlightSelector';
-import FlightDetail from '../Components/FlightDetail';
+import DepAirSelector from '../Components/DepAirSelector';
+import DepAirDetail from '../Components/DepAirDetail';
 
 const flightData = null; 
 
@@ -12,9 +12,9 @@ class FlightContainer extends React.Component {
     super(props);
     this.state = {
       flights: [],
-      selectedFlightReservation: ''
+      selectedDepAir: ''
     };
-    this.handleFlightSelected = this.handleFlightSelected.bind(this);
+    this.handleDepAirSelected = this.handleDepAirSelected.bind(this);
   }
 
   componentDidMount(){
@@ -28,7 +28,7 @@ class FlightContainer extends React.Component {
 
  // parse response into JSON 
         parseString(resText, function (err, flightData){
-          
+
 // clean up the data 
         let cleanData =[]
         for(let key in flightData.flights.flight) {
@@ -49,18 +49,19 @@ componentWillUnmount() {
   this._isMounted = false;
 }
 
- handleFlightSelected(reservation) {
-   this.setState({ selectedFlightReservation: reservation })
+ handleDepAirSelected(depAir) {
+   this.setState({ selectedDepAir: depAir })
  }
 
   render() {
-    const selectedFlight = this.state.flights.find(flight => 
-      flight.reseveration === this.state.selectedFlightReservation)
+    const selectedDepAir = this.state.flights.find(flight => 
+      flight.depair === this.state.selectedDepAir)
+
     return (
       <div>
-        <h2>Flight Container</h2>
-        <FlightSelector flights={this.state.flights} onFlightSelected={this.handleFlightSelected} />
-        <FlightDetail flight={selectedFlight} /> 
+        <h2>Please select a departure and destination airport with carrier to see more flight info </h2>
+        <DepAirSelector flights={this.state.flights} onDepAirSelected={this.handleDepAirSelected} />
+        <DepAirDetail flight={selectedDepAir} /> 
       </div>
     );
    }
