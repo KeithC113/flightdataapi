@@ -14,7 +14,7 @@ class FlightContainer extends React.Component {
       flights: [],
       selectedFlightReservation: ''
     };
-//    this.handleFlightSelected = this.handleFlightSelected.bind(this);
+    this.handleFlightSelected = this.handleFlightSelected.bind(this);
   }
 
   componentDidMount(){
@@ -28,8 +28,14 @@ class FlightContainer extends React.Component {
 
  // parse response into JSON 
         parseString(resText, function (err, flightData){
-        console.log(flightData);
-        newState = flightData 
+          
+// clean up the data 
+        let cleanData =[]
+        for(let key in flightData.flights.flight) {
+            cleanData.push(flightData.flights.flight[key].$)
+        }
+        newState = cleanData
+      
       });
         this.setState({flights: newState})
      })
@@ -48,14 +54,13 @@ componentWillUnmount() {
  }
 
   render() {
-    const selectedFlight = this.state.flights.find(flight => flight.reservation === this.state.selectedFlightReservation)
-    
+    const selectedFlight = this.state.flights.find(flight => 
+      flight.reseveration === this.state.selectedFlightReservation)
     return (
       <div>
         <h2>Flight Container</h2>
         <FlightSelector flights={this.state.flights} onFlightSelected={this.handleFlightSelected} />
-        <FlightDetail flight={selectedFlight} />   
-
+        <FlightDetail flight={selectedFlight} /> 
       </div>
     );
    }
