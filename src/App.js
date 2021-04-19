@@ -8,7 +8,9 @@ class App extends Component {
  
   render() {
     return (
-      <FlightContainer />
+      <div style={{backgroundColor: '#fcdccc'}}>
+        <FlightContainer />
+      </div>
     );
   }
 }

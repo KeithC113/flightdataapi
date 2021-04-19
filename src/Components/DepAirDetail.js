@@ -3,7 +3,7 @@ import React from 'react';
 const DepAirDetail = (props) => {
   if (!props.flight) return null;
   return (
-    <div>
+    <div style={{backgroundColor: '#fcdccc'}}>
       <h2> Flight Details</h2>
 
       <h3> Flight Number: {props.flight.outflightno} </h3> 
